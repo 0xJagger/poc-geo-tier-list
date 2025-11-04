@@ -19,7 +19,7 @@ interface SliderRankingPageProps {
 }
 
 export function SliderRankingPage({ rankListEntity, initialItems, onBack }: SliderRankingPageProps) {
-  // Track scores for each item (1-10 scale)
+  // Track scores for each item (1-100 scale)
   const [itemScores, setItemScores] = useState<Map<string, number>>(new Map())
   
   // Track which items are ranked (in the ranking area)
@@ -136,8 +136,8 @@ export function SliderRankingPage({ rankListEntity, initialItems, onBack }: Slid
   const updateSortedOrder = (rankedIds: Set<string>, scores: Map<string, number>) => {
     const items = initialItems.filter(item => rankedIds.has(item.id))
     const sorted = items.sort((a, b) => {
-      const scoreA = scores.get(a.id) || 5
-      const scoreB = scores.get(b.id) || 5
+      const scoreA = scores.get(a.id) || 50
+      const scoreB = scores.get(b.id) || 50
       return scoreB - scoreA
     })
     setSortedItemOrder(sorted.map(item => item.id))
@@ -230,7 +230,7 @@ export function SliderRankingPage({ rankListEntity, initialItems, onBack }: Slid
       const propertyGraph = convertToPropertyGraph()
       await prepareGRC20Edits(propertyGraph, {
         title: rankListEntity?.name,
-        description: `Slider ranking (1-10) with ${getRankedCount()} ranked items`,
+        description: `Slider ranking (1-100) with ${getRankedCount()} ranked items`,
       })
     } catch (error: any) {
       console.error('Prepare error:', error)
@@ -262,8 +262,8 @@ export function SliderRankingPage({ rankListEntity, initialItems, onBack }: Slid
       sortedItemOrder.map(id => initialItems.find(item => item.id === id)!).filter(Boolean)
     : // When not sliding, get fresh sorted list
       rankedItems.sort((a, b) => {
-        const scoreA = itemScores.get(a.id) || 5
-        const scoreB = itemScores.get(b.id) || 5
+        const scoreA = itemScores.get(a.id) || 50
+        const scoreB = itemScores.get(b.id) || 50
         return scoreB - scoreA
       })
 
@@ -305,7 +305,7 @@ export function SliderRankingPage({ rankListEntity, initialItems, onBack }: Slid
       <div className="slider-ranking-content">
         <div className="ranking-instructions">
           <h2>Drag & Drop with Slider Scoring</h2>
-          <p>Drag items to the ranking area, then use sliders to rate from 1-10. Higher scores = better ranking.</p>
+          <p>Drag items to the ranking area, then use sliders to rate from 1-100. Higher scores = better ranking.</p>
         </div>
 
         <div className="ranked-area-section">
@@ -319,7 +319,7 @@ export function SliderRankingPage({ rankListEntity, initialItems, onBack }: Slid
               <div className="empty-message">Drag items here to rank them</div>
             )}
             {sortedRankedItems.map(item => {
-              const score = itemScores.get(item.id) || 5
+              const score = itemScores.get(item.id) || 50
               
               return (
                 <div
@@ -347,9 +347,8 @@ export function SliderRankingPage({ rankListEntity, initialItems, onBack }: Slid
                       onMouseDown={() => handleSliderChangeStart(item.id)}
                       onTouchStart={() => handleSliderChangeStart(item.id)}
                       min={1}
-                      max={10}
-                      step={1}
-                      marks
+                      max={100}
+                      step={0.01}
                       valueLabelDisplay="auto"
                       sx={{
                         flex: 1,
@@ -370,7 +369,7 @@ export function SliderRankingPage({ rankListEntity, initialItems, onBack }: Slid
                         },
                       }}
                     />
-                    <span className="slider-label">10</span>
+                    <span className="slider-label">100</span>
                     <div 
                       className="score-badge"
                     >

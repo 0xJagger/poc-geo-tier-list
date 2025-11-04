@@ -1,0 +1,74 @@
+{
+  "entities": [
+    {
+      "id": "ranklist-scores-example",
+      "properties": {
+        "name": "MyRank",
+        "rank_type": "weighted_rank"
+      }
+    },
+    {
+      "id": "entity-d",
+      "properties": {
+        "name": "entityD",
+        "emoji": "📊"
+      }
+    },
+    {
+      "id": "entity-b",
+      "properties": {
+        "name": "entityB",
+        "emoji": "📈"
+      }
+    },
+    {
+      "id": "entity-a",
+      "properties": {
+        "name": "entityA",
+        "emoji": "📉"
+      }
+    },
+    {
+      "id": "entity-c",
+      "properties": {
+        "name": "entityC",
+        "emoji": "📋"
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "rel-1",
+      "from": "ranklist-scores-example",
+      "to": "entity-d",
+      "properties": {
+        "score": 100
+      }
+    },
+    {
+      "id": "rel-2",
+      "from": "ranklist-scores-example",
+      "to": "entity-b",
+      "properties": {
+        "score": 100
+      }
+    },
+    {
+      "id": "rel-3",
+      "from": "ranklist-scores-example",
+      "to": "entity-a",
+      "properties": {
+        "score": 50
+      }
+    },
+    {
+      "id": "rel-4",
+      "from": "ranklist-scores-example",
+      "to": "entity-c",
+      "properties": {
+        "score": 25
+      }
+    }
+  ]
+}
+
